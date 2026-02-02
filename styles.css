@@ -269,6 +269,7 @@ h2 {
 
 .line.estimated {
   stroke: var(--accent);
+  stroke-dasharray: 6 8;
 }
 
 .line.current {
