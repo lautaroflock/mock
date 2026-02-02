@@ -1,0 +1,166 @@
+﻿<!doctype html>
+<html lang="es-AR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel de Cuartos - Arrebeef</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <img class="brand-logo" src="logo-400x126.png" alt="Arrebeef" />
+        <div>
+          <div class="brand-title">Panel de Rendimiento</div>
+          <div class="brand-sub">Proyección y seguimiento de cuartos</div>
+        </div>
+      </div>
+      <button class="primary">Exportar</button>
+    </header>
+
+    <main class="grid">
+      <section class="panel summary">
+        <div class="summary-head">
+          <h2>Resumen de cuartos</h2>
+          <div class="chip" id="filters-chip">Todos los turnos • Todos los países</div>
+        </div>
+        <div class="kpis">
+          <div class="kpi">
+            <div class="kpi-label">Cuartos estimados (próximos 7 días)</div>
+            <div class="kpi-value" id="estimated-total">1,248</div>
+            <div class="kpi-meta">Confianza de proyección 93%</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Cuartos actuales (hoy)</div>
+            <div class="kpi-value" id="current-total">182</div>
+            <div class="kpi-meta" id="current-meta">Actualizado 10:45</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Variación de rendimiento</div>
+            <div class="kpi-value" id="variance-total">+4.2%</div>
+            <div class="kpi-meta">vs. mes pasado</div>
+          </div>
+        </div>
+        <div class="line-chart">
+          <div class="chart-header">
+            <div class="chart-title">Estimado vs Actual</div>
+            <div class="legend">
+              <span class="legend-item"><span class="legend-dot estimated"></span> Estimado</span>
+              <span class="legend-item"><span class="legend-dot current"></span> Actual</span>
+            </div>
+          </div>
+          <svg id="line-chart" viewBox="0 0 600 180" preserveAspectRatio="none" aria-label="Estimated and current quarters line chart">
+            <g class="chart-grid" id="chart-grid"></g>
+            <path class="line estimated" id="estimated-line" d=""></path>
+            <path class="line current" id="current-line" d=""></path>
+            <g class="dots estimated" id="estimated-dots"></g>
+            <g class="dots current" id="current-dots"></g>
+          </svg>
+          <div class="chart-axis" id="chart-axis"></div>
+        </div>
+      </section>
+
+      <section class="panel filters">
+        <h2>Filtros</h2>
+        <div class="field">
+          <label>Turno</label>
+          <div class="segmented" role="group" aria-label="Turno">
+            <button class="seg-btn active" data-shift="all">Todos</button>
+            <button class="seg-btn" data-shift="day">Día</button>
+            <button class="seg-btn" data-shift="afternoon">Tarde</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Mes</label>
+          <select id="month-select">
+            <option value="all">Todos los meses</option>
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>País</label>
+          <select id="country-select">
+            <option value="all">Todos los países</option>
+            <option value="ar">Argentina</option>
+            <option value="br">Brasil</option>
+            <option value="uy">Uruguay</option>
+            <option value="us">Estados Unidos</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Día vs Tarde</label>
+          <div class="toggle">
+            <input type="checkbox" id="day-afternoon" />
+            <span class="toggle-track"></span>
+            <span class="toggle-labels">
+              <span>Día</span>
+              <span>Tarde</span>
+            </span>
+          </div>
+        </div>
+        <button class="ghost" id="reset">Restablecer filtros</button>
+      </section>
+
+      <section class="panel table">
+        <div class="table-head">
+          <h2>Resumen de plantas</h2>
+          <button class="ghost">Actualizar</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Planta</th>
+              <th>Turno</th>
+              <th>País</th>
+              <th>Mes</th>
+              <th>Cuartos estimados</th>
+              <th>Cuartos actuales</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </section>
+
+      <section class="panel side">
+        <h2>Mezcla de cuartos</h2>
+        <div class="mix">
+          <div class="mix-row">
+            <div class="mix-label">Delanteros</div>
+            <div class="mix-bar">
+              <span style="width: 48%"></span>
+            </div>
+            <div class="mix-value" id="foreq">48%</div>
+          </div>
+          <div class="mix-row">
+            <div class="mix-label">Traseros</div>
+            <div class="mix-bar">
+              <span style="width: 52%"></span>
+            </div>
+            <div class="mix-value" id="hindq">52%</div>
+          </div>
+        </div>
+        <div class="alert">
+          <div class="alert-title">Alerta de turno</div>
+          <p>El turno tarde en Buenos Aires está 6% arriba del objetivo.</p>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
