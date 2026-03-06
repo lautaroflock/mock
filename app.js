@@ -1,6 +1,7 @@
 ﻿const rowsEl = document.getElementById("rows");
 const monthSelect = document.getElementById("month-select");
 const countrySelect = document.getElementById("country-select");
+const destinationSelect = document.getElementById("destination-select");
 const segButtons = document.querySelectorAll(".seg-btn");
 const dayAfternoonToggle = document.getElementById("day-afternoon");
 const resetBtn = document.getElementById("reset");
@@ -22,6 +23,7 @@ const dataset = [
     plant: " Pérez Millan",
     shift: "day",
     country: "ar",
+    destination: "br",
     month: "01",
     estimated: 47,
     current: 58,
@@ -31,6 +33,7 @@ const dataset = [
     plant: " Escobar",
     shift: "day",
     country: "ar",
+    destination: "uy",
     month: "01",
     estimated: 47,
     current: 58,
@@ -39,6 +42,7 @@ const dataset = [
     plant: " Pérez Millan",
     shift: "afternoon",
     country: "ar",
+    destination: "us",
     month: "01",
     estimated: 47,
     current: 47,
@@ -48,9 +52,21 @@ const dataset = [
     plant: " Escobar",
     shift: "afternoon",
     country: "ar",
+    destination: "br",
     month: "01",
     estimated: 60,
     current: 55,
+    status: "ok",
+  }
+  ,
+  {
+    plant: " Pérez Millan",
+    shift: "day",
+    country: "ar",
+    destination: "cn",
+    month: "07",
+    estimated: 52,
+    current: 49,
     status: "ok",
   }
 ];
@@ -58,7 +74,8 @@ const dataset = [
 let filters = {
   shift: "all",
   month: "all",
-  country: "all",
+  country: "ar",
+  destination: "all",
 };
 
 const formatNumber = (value) => value.toLocaleString("en-US");
@@ -175,11 +192,15 @@ const shiftLabels = {
 };
 
 const countryLabels = {
-  all: "Todos los países",
   ar: "Argentina",
+};
+
+const destinationLabels = {
+  all: "Todos los destinos",
   br: "Brasil",
   uy: "Uruguay",
   us: "Estados Unidos",
+  cn: "China",
 };
 
 const monthLabels = {
@@ -206,8 +227,9 @@ const applyFilters = () => {
   if (filters.month !== "all") {
     rows = rows.filter((row) => row.month === filters.month);
   }
-  if (filters.country !== "all") {
-    rows = rows.filter((row) => row.country === filters.country);
+  rows = rows.filter((row) => row.country === "ar");
+  if (filters.destination !== "all") {
+    rows = rows.filter((row) => row.destination === filters.destination);
   }
 
   const totalEstimated = rows.reduce((sum, row) => sum + row.estimated, 0);
@@ -222,8 +244,8 @@ const applyFilters = () => {
   varianceEl.textContent = `${variance}%`;
 
   const shiftLabel = shiftLabels[filters.shift] || "Todos los turnos";
-  const countryLabel = countryLabels[filters.country] || "Todos los países";
-  filtersChip.textContent = `${shiftLabel} • ${countryLabel}`;
+  const destinationLabel = destinationLabels[filters.destination] || "Todos los destinos";
+  filtersChip.textContent = `${shiftLabel} • ${countryLabels.ar} • ${destinationLabel}`;
 
   renderRows(rows);
   renderChart(rows);
@@ -237,7 +259,7 @@ const renderRows = (rows) => {
     tr.innerHTML = `
       <td>${row.plant}</td>
       <td>${shiftLabels[row.shift]}</td>
-      <td>${countryLabels[row.country]}</td>
+      <td>${destinationLabels[row.destination]}</td>
       <td>${monthLabels[row.month] || row.month}</td>
       <td>${formatNumber(row.estimated)}</td>
       <td>${formatNumber(row.current)}</td>
@@ -262,7 +284,13 @@ monthSelect.addEventListener("change", (event) => {
 });
 
 countrySelect.addEventListener("change", (event) => {
-  filters.country = event.target.value;
+  filters.country = "ar";
+  countrySelect.value = "ar";
+  applyFilters();
+});
+
+destinationSelect.addEventListener("change", (event) => {
+  filters.destination = event.target.value;
   applyFilters();
 });
 
@@ -276,12 +304,15 @@ dayAfternoonToggle.addEventListener("change", (event) => {
 });
 
 resetBtn.addEventListener("click", () => {
-  filters = { shift: "all", month: "all", country: "all" };
+  filters = { shift: "all", month: "all", country: "ar", destination: "all" };
   segButtons.forEach((btn) => btn.classList.toggle("active", btn.dataset.shift === "all"));
   monthSelect.value = "all";
-  countrySelect.value = "all";
+  countrySelect.value = "ar";
+  destinationSelect.value = "all";
   dayAfternoonToggle.checked = false;
   applyFilters();
 });
 
+countrySelect.value = "ar";
+countrySelect.disabled = true;
 applyFilters();

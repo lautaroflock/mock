@@ -291,11 +291,16 @@ h2 {
 .chart-axis {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
+  padding: 0 36px;
   margin-top: 8px;
   font-size: 11px;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.chart-axis span {
+  text-align: center;
 }
 
 .filters {
@@ -330,17 +335,27 @@ select {
 
 .seg-btn {
   border: 1px solid var(--line);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.7);
   padding: 10px 12px;
   border-radius: 999px;
   cursor: pointer;
-  font-weight: 600;
+  font-family: "DM Sans", sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+  box-shadow: 0 6px 14px rgba(10, 35, 80, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.seg-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(10, 35, 80, 0.12);
 }
 
 .seg-btn.active {
   background: var(--accent);
   color: #fff;
   border-color: transparent;
+  box-shadow: 0 10px 20px rgba(11, 74, 162, 0.28);
 }
 
 .toggle {
@@ -464,7 +479,7 @@ tbody tr + tr {
 }
 
 .mix-bar {
-  background: #f3dfcc;
+  background: rgba(45, 123, 240, 0.3);
   border-radius: 999px;
   height: 10px;
   overflow: hidden;
@@ -477,6 +492,8 @@ tbody tr + tr {
 }
 
 .alert {
+  background: rgba(45, 123, 240, 0.1);
+  border-color: rgba(11, 74, 162, 0.45);
   border-radius: 18px;
   padding: 16px;
   border: 1px solid;

@@ -22,7 +22,7 @@
       <section class="panel summary">
         <div class="summary-head">
           <h2>Resumen de cuartos</h2>
-          <div class="chip" id="filters-chip">Todos los turnos • Todos los países</div>
+          <div class="chip" id="filters-chip">Todos los turnos • Argentina • Todos los destinos</div>
         </div>
         <div class="kpis">
           <div class="kpi">
@@ -89,13 +89,19 @@
           </select>
         </div>
         <div class="field">
-          <label>País</label>
-          <select id="country-select">
-            <option value="all">Todos los países</option>
-            <option value="ar">Argentina</option>
+          <label>País (fijo)</label>
+          <select id="country-select" disabled>
+            <option value="ar" selected>Argentina</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Categoría destino</label>
+          <select id="destination-select">
+            <option value="all">Todos los destinos</option>
             <option value="br">Brasil</option>
             <option value="uy">Uruguay</option>
             <option value="us">Estados Unidos</option>
+            <option value="cn">China</option>
           </select>
         </div>
         <div class="field">
@@ -120,7 +126,7 @@
             <tr>
               <th>Planta</th>
               <th>Turno</th>
-              <th>País</th>
+              <th>Destino</th>
               <th>Mes</th>
               <th>Cuartos estimados</th>
               <th>Cuartos actuales</th>
