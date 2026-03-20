@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "arrebeef-mock",
+  "name": "mock",
   "compatibility_date": "2026-02-02",
   "assets": {
     "directory": "./"
