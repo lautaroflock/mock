@@ -40,6 +40,21 @@
             <div class="kpi-value" id="variance-total">+4.2%</div>
             <div class="kpi-meta">vs. mes pasado</div>
           </div>
+          <div class="kpi">
+            <div class="kpi-label">Velocidad instantánea</div>
+            <div class="kpi-value" id="pace-minute">0.0</div>
+            <div class="kpi-meta">cuartos por minuto</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Velocidad horaria</div>
+            <div class="kpi-value" id="pace-hour">0.0</div>
+            <div class="kpi-meta">cuartos por hora</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Objetivo del turno</div>
+            <div class="kpi-value" id="goal-total">0</div>
+            <div class="kpi-meta" id="goal-meta">Precargado desde operación</div>
+          </div>
         </div>
         <div class="line-chart">
           <div class="chart-header">
@@ -155,9 +170,10 @@
             <div class="mix-value" id="hindq">52%</div>
           </div>
         </div>
-        <div class="alert">
-          <div class="alert-title">Alerta de turno</div>
-          <p>El turno tarde en Buenos Aires está 8.5% arriba del objetivo.</p>
+        <div class="alert" id="projection-alert">
+          <div class="alert-title">Proyección del turno</div>
+          <p id="projection-text">Se espera llegar a este porcentaje del objetivo del turno.</p>
+          <p class="alert-detail" id="projection-detail">El color del cuadro cambia según el cumplimiento proyectado.</p>
         </div>
       </section>
     </main>
